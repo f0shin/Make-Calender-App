@@ -5,16 +5,16 @@ Public Sign_MsgBox As Integer
 
 Public Sign_MgMode As Integer
 
-'°ü¸®ÀÚ ¸ğµå<->»ç¿ëÀÚ ¸ğµå ÀüÈ¯ (¿É¼Ç: 1-shtMain¿¡¼­ ¼öµ¿·Î±×ÀÎ, 0-ÇÁ·Î±×·¥ ½ÇÇà Áß¿¡ ÀÚµ¿·Î±×ÀÎ)
+'ê´€ë¦¬ì ëª¨ë“œ<->ì‚¬ìš©ì ëª¨ë“œ ì „í™˜ (ì˜µì…˜: 1-shtMainì—ì„œ ìˆ˜ë™ë¡œê·¸ì¸, 0-í”„ë¡œê·¸ë¨ ì‹¤í–‰ ì¤‘ì— ìë™ë¡œê·¸ì¸)
 Public Sub Change_Mode(Optional automode As Integer = 0)
     With shtMain.btnMgMode
         Select Case .Caption
-            Case "»ç¿ëÀÚ ¸ğµå"
+            Case "ì‚¬ìš©ì ëª¨ë“œ"
                 If automode = 1 Then
                     frmMgMode.Show
                     If Sign_MgMode = -1 Then: Exit Sub
                 End If
-                .Caption = "°ü¸®ÀÚ ¸ğµå"
+                .Caption = "ê´€ë¦¬ì ëª¨ë“œ"
 '                Visible_Sheets
                 With shtMain
                     .Unprotect Password:="44775485520"
@@ -22,8 +22,8 @@ Public Sub Change_Mode(Optional automode As Integer = 0)
                 End With
                 Sign_MgMode = 0
                 
-            Case "°ü¸®ÀÚ ¸ğµå"
-                .Caption = "»ç¿ëÀÚ ¸ğµå"
+            Case "ê´€ë¦¬ì ëª¨ë“œ"
+                .Caption = "ì‚¬ìš©ì ëª¨ë“œ"
 '                VeryHide_Sheets
                 With shtMain
                     .Protect Password:="44775485520", DrawingObjects:=True, Contents:=True, Scenarios:=True
@@ -33,16 +33,16 @@ Public Sub Change_Mode(Optional automode As Integer = 0)
     End With
 End Sub
 
-''½ÃÆ® ÃÊ±âÈ­
+''ì‹œíŠ¸ ì´ˆê¸°í™”
 'Public Sub Init_Sheet(sht As Worksheet)
 '    With sht
 '
 '    End With
 'End Sub
 
-'¿­·ÁÀÖ´Â ¸ğµç ¿¢¼¿ÆÄÀÏ ÀúÀå ÈÄ ´İ±â
+'ì—´ë ¤ìˆëŠ” ëª¨ë“  ì—‘ì…€íŒŒì¼ ì €ì¥ í›„ ë‹«ê¸°
 Public Function SaveClose_AllExcel() As Integer
-    GetString1 = "¿­·ÁÀÖ´Â ¸ğµç ¿¢¼¿ÆÄÀÏÀÌ ÀúÀå ÈÄ ´İÈü´Ï´Ù." & vbCrLf & "±¦ÂúÀ¸½Ã¸é [È®ÀÎ]À» ÆíÁı ÁßÀÌ¶ó¸é [Ãë¼Ò]¸¦ ¼±ÅÃÇØÁÖ¼¼¿ä."
+    GetString1 = "ì—´ë ¤ìˆëŠ” ëª¨ë“  ì—‘ì…€íŒŒì¼ì´ ì €ì¥ í›„ ë‹«í™ë‹ˆë‹¤." & vbCrLf & "ê´œì°®ìœ¼ì‹œë©´ [í™•ì¸]ì„ í¸ì§‘ ì¤‘ì´ë¼ë©´ [ì·¨ì†Œ]ë¥¼ ì„ íƒí•´ì£¼ì„¸ìš”."
     frmMsgBox_OkCancel.Show
     If Sign_MsgBox = -1 Then: SaveClose_AllExcel = -1: Exit Function
     
@@ -54,6 +54,6 @@ Public Function SaveClose_AllExcel() As Integer
         End If
     Next
     
-    GetString1 = "¿­·ÁÀÖ´ø ¸ğµç ¿¢¼¿ÆÄÀÏÀ» ÀúÀå ÈÄ ´İ±â¸¦ ¿Ï·á ÇÏ¿´½À´Ï´Ù."
+    GetString1 = "ì—´ë ¤ìˆë˜ ëª¨ë“  ì—‘ì…€íŒŒì¼ì„ ì €ì¥ í›„ ë‹«ê¸°ë¥¼ ì™„ë£Œ í•˜ì˜€ìŠµë‹ˆë‹¤."
     frmMsgBox_OkOnly.Show
 End Function
