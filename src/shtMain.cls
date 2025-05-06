@@ -9,7 +9,7 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = True
 Option Explicit
 
-'https://www.timeanddate.com/holidays/ ±âÁØ
+'https://www.timeanddate.com/holidays/ ê¸°ì¤€
 Private Const HOLLIDAY_URL As String = "https://www.timeanddate.com/holidays/"
 Private Const MAX_YEAR As Integer = 2040
 Private Const MIN_YEAR As Integer = 2020
@@ -18,14 +18,14 @@ Dim requestYear As String
 Dim requestMonth As String
 Dim requestCountry As String
 
-Dim arrHoliday() As Date 'ÈŞÀÏ ¸ñ·Ï
+Dim arrHoliday() As Date 'íœ´ì¼ ëª©ë¡
 
 '***************************************************
-'ÀÌº¥Æ®
+'ì´ë²¤íŠ¸
 '***************************************************
-'½ÃÀÛ
+'ì‹œì‘
 Private Sub btnRun_Click()
-    '¼¼ÆÃ
+    'ì„¸íŒ…
     requestYear = shtMain.txtYear
     requestMonth = shtMain.txtMonth
     If shtMain.opCountryKR.Value Then
@@ -34,13 +34,13 @@ Private Sub btnRun_Click()
         requestCountry = "japan"
     End If
     
-    'ÈŞÀÏ °¡Á®¿À±â
+    'íœ´ì¼ ê°€ì ¸ì˜¤ê¸°
     Get_Holiday
     
-    '´Ş·Â ¸¸µé±â
+    'ë‹¬ë ¥ ë§Œë“¤ê¸°
     Make_Calender
 
-    'Á¾·á
+    'ì¢…ë£Œ
     'MsgBox "Main : Completed!"
     MsgBox "Completed!"
 End Sub
@@ -88,10 +88,10 @@ End Sub
 Private Sub btnAdmin_Click()
     Static isAdminMode As Boolean
     
-    '¸ğµå Åä±Û
+    'ëª¨ë“œ í† ê¸€
     isAdminMode = Not isAdminMode
     
-    '°ü¸®ÀÚ ¸ğµå È°¼ºÈ­
+    'ê´€ë¦¬ì ëª¨ë“œ í™œì„±í™”
     If isAdminMode Then
         LockCellsAndShapes
         shtMain.btnAdmin.Caption = "User Mode"
@@ -106,7 +106,7 @@ End Sub
 Private Sub LockCellsAndShapes()
     Dim shp As Shape
 
-    '½ÃÆ® º¸È£: ¼¿ ¼öÁ¤ ±İÁö, Çà/¿­ »ğÀÔ ±İÁö, µµÇü ÀÌµ¿ Á¦ÇÑ
+    'ì‹œíŠ¸ ë³´í˜¸: ì…€ ìˆ˜ì • ê¸ˆì§€, í–‰/ì—´ ì‚½ì… ê¸ˆì§€, ë„í˜• ì´ë™ ì œí•œ
     shtMain.Protect Password:="1234", _
                     UserInterfaceOnly:=True, _
                     AllowFormattingCells:=False, _
@@ -115,29 +115,29 @@ Private Sub LockCellsAndShapes()
                     AllowInsertingColumns:=False, _
                     AllowInsertingRows:=False
     
-    '¸ğµç µµÇü ÀÌµ¿ Á¦ÇÑ
+    'ëª¨ë“  ë„í˜• ì´ë™ ì œí•œ
     For Each shp In shtMain.Shapes
-        shp.Locked = True 'µµÇü Àá±İ
-        shp.Placement = xlFreeFloating 'µµÇü ÀÌµ¿ ºÒ°¡
+        shp.Locked = True 'ë„í˜• ì ê¸ˆ
+        shp.Placement = xlFreeFloating 'ë„í˜• ì´ë™ ë¶ˆê°€
     Next shp
 End Sub
 
 Private Sub UnlockCellsAndShapes()
     Dim shp As Shape
 
-    '½ÃÆ® º¸È£ ÇØÁ¦
+    'ì‹œíŠ¸ ë³´í˜¸ í•´ì œ
     shtMain.Unprotect Password:="1234"
 
-    'µµÇü ÀÌµ¿ Çã¿ë
+    'ë„í˜• ì´ë™ í—ˆìš©
     For Each shp In shtMain.Shapes
         shp.Locked = False
-        shp.Placement = xlMoveAndSize 'ÀÌµ¿ °¡´ÉÇÏ°Ô ¼³Á¤
+        shp.Placement = xlMoveAndSize 'ì´ë™ ê°€ëŠ¥í•˜ê²Œ ì„¤ì •
     Next shp
 End Sub
 
 
 '*********************************************
-'ÇÁ·Î½ÃÀú ¸ğÀ½
+'í”„ë¡œì‹œì € ëª¨ìŒ
 '*********************************************
 
 Public Function Get_Holiday()
@@ -156,9 +156,9 @@ Public Function Get_Holiday()
     http.Open "GET", url, False
     http.send
     
-    '¿À·ù ¹ß»ı ½Ã ½ºÅµ
+    'ì˜¤ë¥˜ ë°œìƒ ì‹œ ìŠ¤í‚µ
     If Err.Number <> 0 Or http.Status <> 200 Then
-        MsgBox "À¥ ¿äÃ» ½ÇÆĞ! ÀÎÅÍ³İ ¿¬°áÀ» È®ÀÎÇÏ¼¼¿ä.", vbExclamation
+        MsgBox "ì›¹ ìš”ì²­ ì‹¤íŒ¨! ì¸í„°ë„· ì—°ê²°ì„ í™•ì¸í•˜ì„¸ìš”.", vbExclamation
         Err.Clear
         Exit Function
     End If
@@ -168,7 +168,7 @@ Public Function Get_Holiday()
     html.body.innerHTML = http.responseText
 
     Set table = html.getElementById("holidays-table")
-    If table Is Nothing Then Exit Function ' ÆäÀÌÁö ±¸Á¶°¡ º¯°æµÇ¾úÀ» °æ¿ì ½ºÅµ
+    If table Is Nothing Then Exit Function ' í˜ì´ì§€ êµ¬ì¡°ê°€ ë³€ê²½ë˜ì—ˆì„ ê²½ìš° ìŠ¤í‚µ
 
     For Each tr In table.getElementsByTagName("tr")
         If tr.className = "showrow" Then
@@ -179,19 +179,19 @@ Public Function Get_Holiday()
         End If
     Next
     
-    '°øÈŞÀÏ µ¥ÀÌÅÍ¸¦ ¼³Á¤ (ºñ¾î ÀÖ´Â °æ¿ì¿¡µµ ¹®Á¦ ¾øÀ½)
+    'ê³µíœ´ì¼ ë°ì´í„°ë¥¼ ì„¤ì • (ë¹„ì–´ ìˆëŠ” ê²½ìš°ì—ë„ ë¬¸ì œ ì—†ìŒ)
     If r > 0 Then
         ReDim arrHoliday(0 To UBound(arrResult))
         For r = 0 To UBound(arrResult)
             arrHoliday(r) = arrResult(r)
         Next r
     Else
-        ReDim arrHoliday(0) ' °øÈŞÀÏ ¾øÀ½ Ã³¸®
+        ReDim arrHoliday(0) ' ê³µíœ´ì¼ ì—†ìŒ ì²˜ë¦¬
     End If
 
     'MsgBox "Get_Holiday : Completed!"
     
-    '°´Ã¼ ÇØÁ¦
+    'ê°ì²´ í•´ì œ
     Set http = Nothing
     Set html = Nothing
     Set table = Nothing
@@ -214,12 +214,12 @@ Private Sub Make_Calender()
     Dim currentYear As Integer
     Dim currentMonth As Integer
     
-    ' »õ ÆÄÀÏ »ı¼º ¹× ½ÃÆ® º¹»ç
+    ' ìƒˆ íŒŒì¼ ìƒì„± ë° ì‹œíŠ¸ ë³µì‚¬
     Set newWorkbook = Workbooks.Add
     Set wsBase = ThisWorkbook.Sheets("export")
     wsBase.Copy Before:=newWorkbook.Sheets(1)
     
-    ' ¿¬¿ù ¼³Á¤
+    ' ì—°ì›” ì„¤ì •
     currentYear = CInt(requestYear)
     currentMonth = CInt(requestMonth)
     
@@ -227,65 +227,65 @@ Private Sub Make_Calender()
     wsNew.Name = currentYear & "_" & currentMonth
     wsNew.Cells(1, 2) = currentYear & " " & GetMonthName(currentMonth)
     
-    ' ³¯Â¥ ¼³Á¤
+    ' ë‚ ì§œ ì„¤ì •
     firstDate = DateSerial(currentYear, currentMonth, 1)
     lastDate = DateSerial(currentYear, currentMonth + 1, 0)
     
-    ' Ã¹ ¹øÂ° ¿­ ¼³Á¤
+    ' ì²« ë²ˆì§¸ ì—´ ì„¤ì •
     currentCol = GetCurrentCol(firstDate)
     currentRow = 3
     
-    ' ³¯Â¥ Ã¤¿ì±â
+    ' ë‚ ì§œ ì±„ìš°ê¸°
     Dim currentDay As Integer
     For currentDay = 0 To lastDate - firstDate
         Dim currentDate As Date
         currentDate = firstDate + currentDay
         wsNew.Cells(currentRow, currentCol) = currentDay + 1
         
-        ' °øÈŞÀÏ µ¥ÀÌÅÍ°¡ Á¸ÀçÇÒ °æ¿ì¿¡¸¸ °Ë»ç
+        ' ê³µíœ´ì¼ ë°ì´í„°ê°€ ì¡´ì¬í•  ê²½ìš°ì—ë§Œ ê²€ì‚¬
         If UBound(arrHoliday) >= 0 Then
             For Each holiday In arrHoliday
                 If holiday = currentDate Then
-                    wsNew.Cells(currentRow, currentCol).Font.Color = RGB(255, 0, 0) ' »¡°£»ö
+                    wsNew.Cells(currentRow, currentCol).Font.Color = RGB(255, 0, 0) ' ë¹¨ê°„ìƒ‰
                     Exit For
                 End If
             Next holiday
         End If
         
-        ' ´ÙÀ½ ¿­·Î ÀÌµ¿
+        ' ë‹¤ìŒ ì—´ë¡œ ì´ë™
         currentCol = currentCol + 2
         If currentCol > 14 Then
             currentCol = 2
             currentRow = currentRow + 2
             If currentRow > 11 Then
-                '6ÁÖÂ÷°¡ µÈ °æ¿ì : 11,12 ÇàÀ» º¹»çÇØ¼­ 13,14Çà¿¡ ºÙ¿©³Ö°í °ªÀº Áö¿ò.
+                '6ì£¼ì°¨ê°€ ëœ ê²½ìš° : 11,12 í–‰ì„ ë³µì‚¬í•´ì„œ 13,14í–‰ì— ë¶™ì—¬ë„£ê³  ê°’ì€ ì§€ì›€.
                 wsNew.Rows("11:12").Copy
-                wsNew.Rows("13:14").PasteSpecial xlPasteFormats ' ¼­½Ä¸¸ º¹»ç
+                wsNew.Rows("13:14").PasteSpecial xlPasteFormats ' ì„œì‹ë§Œ ë³µì‚¬
                 wsNew.Rows("13:14").ClearContents
             End If
         End If
     Next currentDay
     
-    ' Æ÷Ä¿½º¸¦ A1¿¡ µÎ±â
+    ' í¬ì»¤ìŠ¤ë¥¼ A1ì— ë‘ê¸°
     wsNew.Activate
     wsNew.Range("A1").Select
     
-    ' ºó ½ÃÆ® »èÁ¦ (Sheet1ÀÌ Á¸ÀçÇÏ¸é Á¦°Å)
-    Application.DisplayAlerts = False ' °æ°í ¸Ş½ÃÁö ¹æÁö
+    ' ë¹ˆ ì‹œíŠ¸ ì‚­ì œ (Sheet1ì´ ì¡´ì¬í•˜ë©´ ì œê±°)
+    Application.DisplayAlerts = False ' ê²½ê³  ë©”ì‹œì§€ ë°©ì§€
     On Error Resume Next
     newWorkbook.Sheets("Sheet1").Delete
     On Error GoTo 0
-    Application.DisplayAlerts = True ' °æ°í ¸Ş½ÃÁö ´Ù½Ã È°¼ºÈ­
+    Application.DisplayAlerts = True ' ê²½ê³  ë©”ì‹œì§€ ë‹¤ì‹œ í™œì„±í™”
 
     'MsgBox "Make_Calender : Completed! " & wsNew.Name, vbInformation
     
 End Sub
 
 
-'Ã¹¹øÀç ³¯ÀÌ ¹«½¼ ¿äÀÏÀÎÁö¿¡ µû¸¥ Ã¹¹øÂ° ¿­ ¼³Á¤
+'ì²«ë²ˆì¬ ë‚ ì´ ë¬´ìŠ¨ ìš”ì¼ì¸ì§€ì— ë”°ë¥¸ ì²«ë²ˆì§¸ ì—´ ì„¤ì •
 Function GetCurrentCol(firstDate As Date) As Integer
     Dim weekdayValue As Integer
-    weekdayValue = Weekday(firstDate, vbSunday) ' ÀÏ¿äÀÏ ½ÃÀÛ ±âÁØ
+    weekdayValue = Weekday(firstDate, vbSunday) ' ì¼ìš”ì¼ ì‹œì‘ ê¸°ì¤€
 
     Select Case weekdayValue
         Case 1: GetCurrentCol = 2  ' Sunday
@@ -295,11 +295,11 @@ Function GetCurrentCol(firstDate As Date) As Integer
         Case 5: GetCurrentCol = 10 ' Thursday
         Case 6: GetCurrentCol = 12 ' Friday
         Case 7: GetCurrentCol = 14 ' Saturday
-        Case Else: GetCurrentCol = 2 ' ±âº»°ª (¿À·ù ¹æÁö)
+        Case Else: GetCurrentCol = 2 ' ê¸°ë³¸ê°’ (ì˜¤ë¥˜ ë°©ì§€)
     End Select
 End Function
 
-'¿ù ÀÌ¸§
+'ì›” ì´ë¦„
 Function GetMonthName(currentMonth As Integer) As String
     Select Case currentMonth
         Case 1: GetMonthName = "January"
